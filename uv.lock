@@ -506,6 +506,7 @@ dependencies = [
     { name = "langchain-openai" },
     { name = "langchain-tavily" },
     { name = "langsmith" },
+    { name = "pydantic" },
     { name = "python-dotenv" },
     { name = "tavily-python" },
 ]
@@ -519,6 +520,7 @@ requires-dist = [
     { name = "langchain-openai", specifier = ">=1.3.2" },
     { name = "langchain-tavily", specifier = ">=0.2.18" },
     { name = "langsmith", specifier = ">=0.8.16" },
+    { name = "pydantic", specifier = ">=2.13.4" },
     { name = "python-dotenv", specifier = ">=1.2.2" },
     { name = "tavily-python", specifier = ">=0.7.26" },
 ]

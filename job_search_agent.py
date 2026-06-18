@@ -6,7 +6,8 @@ from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage
 # from tavily import TavilyClient
 from langchain_tavily import TavilySearch
-
+from pydantic import BaseModel,Field
+from typing import List
 load_dotenv()
 
 # tavily = TavilyClient(api_key=os.getenv("TAVILY_API_KEY"))
@@ -23,10 +24,22 @@ load_dotenv()
 #     print(f"Searching the web for: {query}")
 #     return tavily.search(query=query)
 
+class Source(BaseModel):
+    """schema for a source used by the agent"""
+    url: str = Field(description="The URL of the source")
+
+class agent_response(BaseModel):
+    """schema for the agent response with answer and sources"""
+    content: str = Field(description="The content of the response")
+    sources: List[Source] = Field(default_factory=list, description="The sources used to generate the response")
+
+
+
+
 llm=ChatOpenAI(model="gpt-5", temperature=0)
 # tools=[search_web]
 tools=[TavilySearch()]
-agent = create_agent(model=llm, tools=tools)
+agent = create_agent(model=llm, tools=tools,response_format=agent_response)
 
 def main():
     user_input = "Search for the latest jobs for Data Scientist in Bangalore with 3 plus years experience professionals and sort based on the most recent jobs posted."
